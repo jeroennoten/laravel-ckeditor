@@ -1,0 +1,20 @@
+{
+    "name": "jeroennoten/laravel-ckeditor",
+    "description": "Laravel CKEditor",
+    "keywords": ["laravel", "ckeditor", "wysiwyg"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeroen Noten",
+            "email": "jeroennoten@me.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "JeroenNoten\\LaravelCkEditor\\": "src/"
+        }
+    },
+    "require": {
+        "laravel/framework": "^5.2"
+    }
+}
