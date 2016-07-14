@@ -15,8 +15,8 @@ class CkEditor
         $this->view = $view;
     }
 
-    public function editor($config = null)
+    public function editor($name, $config = null)
     {
-        return $this->view->make('ckeditor::js')->with(compact('config'));
+        return $this->view->make('ckeditor::js')->with(compact('name', 'config'));
     }
 }
