@@ -6,16 +6,18 @@ use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use JeroenNoten\LaravelAdminLte\ServiceProvider as AdminLteServiceProvider;
+use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\Assets;
+use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\BladeDirective;
+use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\Views;
 
 class ServiceProvider extends BaseServiceProvider
 {
+    use BladeDirective, Views, Assets;
 
     public function boot()
     {
-        $this->bladeDirective();
-
+        $this->bladeDirective('ckeditor', CkEditor::class, 'editor');
         $this->loadViews();
-
         $this->publishAssets();
     }
 
@@ -24,34 +26,13 @@ class ServiceProvider extends BaseServiceProvider
         //
     }
 
-    private function bladeDirective()
+    protected function path(): string
     {
-        \Blade::directive('ckeditor', function ($expression) {
-            $contentClass = CkEditor::class;
-            return "<?={$contentClass}::editor();?>";
-        });
+        return __DIR__.'/..';
     }
 
-    private function loadViews()
+    protected function name(): string
     {
-        $viewsPath = $this->packagePath('resources/views');
-
-        $this->loadViewsFrom($viewsPath, 'ckeditor');
-
-        $this->publishes([
-            $viewsPath => base_path('resources/views/vendor/adminlte'),
-        ], 'views');
-    }
-
-    private function publishAssets()
-    {
-        $this->publishes([
-            $this->packagePath('resources/assets') => public_path('vendor/ckeditor'),
-        ], 'assets');
-    }
-
-    private function packagePath($path)
-    {
-        return __DIR__ . "/../$path";
+        return 'ckeditor';
     }
 }
