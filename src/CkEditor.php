@@ -4,12 +4,19 @@
 namespace JeroenNoten\LaravelCkEditor;
 
 
-use View;
+use Illuminate\Contracts\View\Factory;
 
 class CkEditor
 {
-    public static function editor()
+    private $view;
+
+    public function __construct(Factory $view)
     {
-        return View::make('ckeditor::js')->render();
+        $this->view = $view;
+    }
+
+    public function editor()
+    {
+        return $this->view->make('ckeditor::js');
     }
 }
