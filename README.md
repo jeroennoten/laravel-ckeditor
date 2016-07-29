@@ -10,6 +10,7 @@ It provides a custom blade directive `@ckeditor('textareaId')` to quickly integr
 - [Installation](#installation)
 - [Updating](#updating)
 - [Usage](#usage)
+- [Configuration](#configuration)
 
 ## Installation
 
@@ -56,4 +57,17 @@ Example:
 <textarea id="bodyField"></textarea>
 
 @ckeditor('bodyField')
+```
+
+## Configuration
+
+If you need to configure the CkEditor instance, you can do that by passing a second argument with all options into the blade directive.
+Refer to the [CkEditor config documentation](http://docs.ckeditor.com/#!/api/CKEDITOR.config) to discover all possible options.
+
+Example: 
+
+```html
+<textarea id="bodyField"></textarea>
+
+@ckeditor('bodyField', ['height' => 500])
 ```
