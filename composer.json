@@ -15,6 +15,7 @@
         }
     },
     "require": {
+        "php" : "^7.0",
         "laravel/framework": "5.1.*|5.2.*",
         "jeroennoten/laravel-package-helper": "^2.0"
     },
