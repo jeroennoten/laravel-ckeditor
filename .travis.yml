@@ -9,8 +9,10 @@ env:
 
 matrix:
   include:
-    - env: setup=lowest
-    - env: setup=stable
+    - php: 7.0
+      env: setup=lowest
+    - php: 7.0
+      env: setup=stable
 
 sudo: false
 
