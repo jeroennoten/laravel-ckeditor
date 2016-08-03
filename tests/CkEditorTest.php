@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\View\Compilers\BladeCompiler;
 use JeroenNoten\LaravelCkEditor\CkEditor;
 
 class CkEditorTest extends \Orchestra\Testbench\TestCase
