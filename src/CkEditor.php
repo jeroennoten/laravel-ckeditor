@@ -10,13 +10,16 @@ class CkEditor
 {
     private $view;
 
+    private $instanceCount = 0;
+
     public function __construct(Factory $view)
     {
         $this->view = $view;
     }
 
-    public function editor($name, $config = null)
+    public function editor($name = null, $config = null)
     {
-        return $this->view->make('ckeditor::js')->with(compact('name', 'config'));
+        $instanceCount = ++$this->instanceCount;
+        return $this->view->make('ckeditor::js')->with(compact('name', 'config', 'instanceCount'))->render();
     }
 }

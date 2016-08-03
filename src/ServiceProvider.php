@@ -23,7 +23,7 @@ class ServiceProvider extends BaseServiceProvider
 
     public function register()
     {
-        //
+        $this->app->singleton(CkEditor::class);
     }
 
     protected function path(): string

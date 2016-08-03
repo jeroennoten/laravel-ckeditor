@@ -15,7 +15,11 @@
         }
     },
     "require": {
-        "laravel/framework": "^5.2",
+        "laravel/framework": "5.1.*|5.2.*",
         "jeroennoten/laravel-package-helper": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "orchestra/testbench": "3.1.*|3.2.*"
     }
 }
