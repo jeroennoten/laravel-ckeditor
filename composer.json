@@ -22,12 +22,13 @@
     "require": {
         "php" : "^7.0",
         "laravel/framework": "~5.2.0",
-        "jeroennoten/laravel-package-helper": "^2.0"
+        "jeroennoten/laravel-package-helper": "^3.1"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.8",
         "orchestra/testbench": "~3.2.3",
         "mockery/mockery": "^0.9.5",
-        "hamcrest/hamcrest-php": "~1.2"
+        "hamcrest/hamcrest-php": "~1.2",
+        "league/flysystem-aws-s3-v3": "~1.0"
     }
 }

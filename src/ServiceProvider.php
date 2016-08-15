@@ -2,21 +2,19 @@
 
 namespace JeroenNoten\LaravelCkEditor;
 
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Filesystem\Factory;
 use Illuminate\Contracts\Routing\UrlGenerator;
-use Illuminate\Filesystem\FilesystemManager;
-use Illuminate\Foundation\Application;
 use Illuminate\Routing\Router;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use JeroenNoten\LaravelCkEditor\Uploads\ImageUploader;
-use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\Assets;
-use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\BladeDirective;
-use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits\Views;
+use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits;
 
 class ServiceProvider extends BaseServiceProvider
 {
-    use BladeDirective, Views, Assets;
+    use ServiceProviderTraits;
 
     public function boot(Router $router)
     {
@@ -24,22 +22,25 @@ class ServiceProvider extends BaseServiceProvider
         $this->loadViews();
         $this->publishAssets();
         $this->registerRoutes($router);
+        $this->publishConfig();
     }
 
     public function register()
     {
         $this->app->singleton(CkEditor::class);
 
-        $this->app->singleton(ImageUploader::class, function (Application $app) {
-            $storage = $this->app->make(Factory::class);
-            $url = $this->app->make(UrlGenerator::class);
-            return new ImageUploader($storage->disk('public'), $url);
+        $this->app->singleton(ImageUploader::class, function (Container $app) {
+            $storage = $app->make(Factory::class);
+            $url = $app->make(UrlGenerator::class);
+            $config = $this->getConfig();
+            $disk = $storage->disk($config['disk']);
+            return new ImageUploader($disk, $url);
         });
     }
 
     protected function path()
     {
-        return __DIR__.'/..';
+        return __DIR__ . '/..';
     }
 
     protected function name()
@@ -59,5 +60,16 @@ class ServiceProvider extends BaseServiceProvider
             $router->post('images', 'Images@store')->name('images.store');
 
         });
+    }
+
+    private function getConfig()
+    {
+        $config = $this->app->make(Repository::class);
+        return $config['ckeditor'];
+    }
+
+    protected function getContainer()
+    {
+        return $this->app;
     }
 }

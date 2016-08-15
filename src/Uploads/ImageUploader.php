@@ -18,6 +18,11 @@ class ImageUploader
         $this->url = $url;
     }
 
+    public function getDisk()
+    {
+        return $this->disk;
+    }
+
     public function upload(UploadedFile $file)
     {
         $path = 'uploads' . DIRECTORY_SEPARATOR . $this->generateFileName($file);
