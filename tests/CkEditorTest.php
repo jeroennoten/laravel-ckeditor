@@ -2,40 +2,52 @@
 
 use JeroenNoten\LaravelCkEditor\CkEditor;
 
-class CkEditorTest extends \Orchestra\Testbench\TestCase
+class CkEditorTest extends TestCase
 {
-    public function testJavaLibraryOnly()
+    public function testJavascriptLibraryOnly()
     {
-        $this->assertEquals(
-            "<script src=\"http://localhost/vendor/ckeditor/ckeditor.js\"></script>\n",
-            app(CkEditor::class)->editor()
-        );
+        $this->assertScript(true);
     }
 
     public function testNamedTextField()
     {
-        $this->assertEquals(
-            "<script src=\"http://localhost/vendor/ckeditor/ckeditor.js\"></script>\n" .
-            "    <script>CKEDITOR.replace(\"textfield\", null);</script>\n",
-            app(CkEditor::class)->editor('textfield')
-        );
+        $this->assertScript(true, 'textfield');
     }
 
     public function testTwoInstances()
     {
+        $this->assertScript(true, 'textfield1');
+        $this->assertScript(false, 'textfield2');
+    }
+
+    public function testOverrideConfig()
+    {
+        $config = $this->getConfig();
+        $config['filebrowserImageUploadUrl'] = '/upload.php';
+
+        $this->assertScript(true, 'textfield2', $config);
+    }
+
+    private function assertScript($lib, $editor = null, $config = null)
+    {
+        $instance = app(CkEditor::class);
+
+        $config = $config ? $config : $this->getConfig();
+
         $this->assertEquals(
-            "<script src=\"http://localhost/vendor/ckeditor/ckeditor.js\"></script>\n" .
-            "    <script>CKEDITOR.replace(\"textfield1\", null);</script>\n",
-            app(CkEditor::class)->editor('textfield1')
-        );
-        $this->assertEquals(
-            "<script>CKEDITOR.replace(\"textfield2\", null);</script>\n",
-            app(CkEditor::class)->editor('textfield2')
+            ($lib ? "<script src=\"http://localhost/vendor/ckeditor/ckeditor.js\"></script>\n" : '') .
+            ($lib && $editor ? '    ' : '') .
+            ($editor ? "<script>CKEDITOR.replace(\"$editor\", " . json_encode($config) . ");</script>\n" : ''),
+            $instance->editor($editor, $config)
         );
     }
 
-    protected function getPackageProviders($app)
+    private function getConfig()
     {
-        return [\JeroenNoten\LaravelCkEditor\ServiceProvider::class];
+        return [
+            'filebrowserImageUploadUrl' => route('ckeditor.images.store'),
+            'uploadUrl' => route('ckeditor.images.store', 'json'),
+            'extraPlugins' => 'uploadimage'
+        ];
     }
 }
