@@ -33,19 +33,6 @@ class ImagesTest extends TestCase
         ]);
     }
 
-    /**
-     * @param UrlGenerator $urlGenerator
-     * @expectedException \Illuminate\Session\TokenMismatchException
-     */
-    public function testCsrf(UrlGenerator $urlGenerator)
-    {
-        $this->actingAs(new User);
-
-        $this->upload($urlGenerator->route('ckeditor.images.store', [
-            'CKEditorFuncNum' => 9
-        ]), 0, false);
-    }
-
     public function testAuth(UrlGenerator $urlGenerator)
     {
         $this->upload($urlGenerator->route('ckeditor.images.store', [

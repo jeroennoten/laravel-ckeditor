@@ -54,7 +54,7 @@ class ServiceProvider extends BaseServiceProvider
         $router->group([
             'prefix' => 'ckeditor',
             'as' => 'ckeditor.',
-            'middleware' => ['api', StartSession::class, 'auth', VerifyCsrfToken::class],
+            'middleware' => ['web', 'auth'],
             'namespace' => __NAMESPACE__ . '\\Http\\Controllers'
         ], function (Router $router) {
 
