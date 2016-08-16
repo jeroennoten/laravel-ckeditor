@@ -9,6 +9,7 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Routing\Router;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use JeroenNoten\LaravelCkEditor\Http\Middleware\VerifyCsrfToken;
 use JeroenNoten\LaravelCkEditor\Uploads\ImageUploader;
 use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits;
 
@@ -53,7 +54,7 @@ class ServiceProvider extends BaseServiceProvider
         $router->group([
             'prefix' => 'ckeditor',
             'as' => 'ckeditor.',
-            'middleware' => ['api', StartSession::class],
+            'middleware' => ['api', StartSession::class, 'auth', VerifyCsrfToken::class],
             'namespace' => __NAMESPACE__ . '\\Http\\Controllers'
         ], function (Router $router) {
 
