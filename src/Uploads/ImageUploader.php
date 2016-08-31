@@ -5,6 +5,8 @@ namespace JeroenNoten\LaravelCkEditor\Uploads;
 use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\UploadedFile;
+use Intervention\Image\Constraint;
+use Intervention\Image\ImageManager;
 
 class ImageUploader
 {
@@ -12,10 +14,13 @@ class ImageUploader
 
     private $url;
 
-    public function __construct(FilesystemAdapter $disk, UrlGenerator $url)
+    private $imageManager;
+
+    public function __construct(FilesystemAdapter $disk, UrlGenerator $url, ImageManager $imageManager)
     {
         $this->disk = $disk;
         $this->url = $url;
+        $this->imageManager = $imageManager;
     }
 
     public function getDisk()
@@ -25,9 +30,14 @@ class ImageUploader
 
     public function upload(UploadedFile $file)
     {
-        $path = 'uploads' . DIRECTORY_SEPARATOR . $this->generateFileName($file);
+        $path = 'uploads'.DIRECTORY_SEPARATOR.$this->generateFileName($file);
 
-        $this->disk->put($path, file_get_contents($file));
+        $image = $this->imageManager->make($file)->resize(450, null, function (Constraint $constraint) {
+            $constraint->aspectRatio();
+            $constraint->upsize();
+        })->encode();
+
+        $this->disk->put($path, $image);
 
         return $this->url->to($this->getPublicUrl($path));
     }

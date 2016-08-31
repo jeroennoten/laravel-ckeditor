@@ -9,6 +9,7 @@ use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Routing\Router;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Intervention\Image\ImageManager;
 use JeroenNoten\LaravelCkEditor\Http\Middleware\VerifyCsrfToken;
 use JeroenNoten\LaravelCkEditor\Uploads\ImageUploader;
 use JeroenNoten\LaravelPackageHelper\ServiceProviderTraits;
@@ -35,7 +36,7 @@ class ServiceProvider extends BaseServiceProvider
             $url = $app->make(UrlGenerator::class);
             $config = $this->getConfig();
             $disk = $storage->disk($config['disk']);
-            return new ImageUploader($disk, $url);
+            return new ImageUploader($disk, $url, new ImageManager(['drive' => 'imagick']));
         });
     }
 
