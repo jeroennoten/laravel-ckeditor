@@ -35,7 +35,7 @@ class ImageUploader
         $image = $this->imageManager->make($file)->resize(450, null, function (Constraint $constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
-        })->encode();
+        })->encode()->getEncoded();
 
         $this->disk->put($path, $image);
 
