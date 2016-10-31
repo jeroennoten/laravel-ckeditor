@@ -29,7 +29,7 @@ It provides a custom blade directive `@ckeditor('textareaId')` to quickly integr
 3. Publish the public assets:
 
     ```
-    php artisan vendor:publish --provider="JeroenNoten\LaravelCkEditor\ServiceProvider" --tag=assets
+    php artisan vendor:publish --tag=ckeditor-assets
     ```
 
 ## Updating
@@ -43,7 +43,7 @@ It provides a custom blade directive `@ckeditor('textareaId')` to quickly integr
 2. Then, publish the public assets with the `--force` flag to overwrite existing files
 
     ```
-    php artisan vendor:publish --provider="JeroenNoten\LaravelCkEditor\ServiceProvider" --tag=assets --force
+    php artisan vendor:publish --tag=ckeditor-assets --force
     ```
 
 ## Usage
