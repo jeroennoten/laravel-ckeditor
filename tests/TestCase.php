@@ -3,6 +3,9 @@
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
+    use \Laravel\BrowserKitTesting\Concerns\MakesHttpRequests;
+    use \Laravel\BrowserKitTesting\Concerns\InteractsWithSession;
+
     /** @before */
     public function injectDependencies()
     {

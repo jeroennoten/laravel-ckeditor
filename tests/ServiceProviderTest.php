@@ -26,6 +26,7 @@ class ServiceProviderTest extends TestCase
     public function testCloudDisk()
     {
         $this->app['config']['ckeditor.disk'] = 's3';
+        $this->app['config']['filesystems.disks.s3.region'] = 'your-region';
 
         /** @var ImageUploader $imageUploader */
         $imageUploader = $this->app->make(ImageUploader::class);
