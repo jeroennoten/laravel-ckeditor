@@ -26,9 +26,8 @@
         "intervention/image": "^2.3"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.8.20",
-        "orchestra/database": "~3.2.0|~3.3.0|~3.4.0-dev",
-        "orchestra/testbench": "~3.2.4|~3.3.0|~3.4.0-dev",
+        "phpunit/phpunit": "~4.8.20|~5.0",
+        "orchestra/testbench": "~3.2.4|~3.3.0|~3.4.0",
         "mockery/mockery": "^0.9.5",
         "hamcrest/hamcrest-php": "~1.2",
         "league/flysystem-aws-s3-v3": "^1.0.1",
