@@ -32,5 +32,11 @@
         "hamcrest/hamcrest-php": "~1.2",
         "league/flysystem-aws-s3-v3": "^1.0.1",
         "laravel/browser-kit-testing": "^1.0"
-    }
+    },
+    "extra": {
+       "laravel": {
+          "providers": [
+            "JeroenNoten\\LaravelCkEditor\\ServiceProvider"
+          ]
+      }
 }
