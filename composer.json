@@ -20,7 +20,7 @@
         ]
     },
     "require": {
-        "laravel/framework": "~5.2.0|~5.3.0|~5.4.0",
+        "laravel/framework": "~5.2.0|~5.3.0|~5.4.0|~5.5.0",
         "jeroennoten/laravel-package-helper": "^3.1",
         "league/flysystem": "^1.0.8",
         "intervention/image": "^2.3"
@@ -32,5 +32,12 @@
         "hamcrest/hamcrest-php": "~1.2",
         "league/flysystem-aws-s3-v3": "^1.0.1",
         "laravel/browser-kit-testing": "^1.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JeroenNoten\\LaravelCkEditor\\ServiceProvider"
+            ]
+        }
     }
 }
